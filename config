@@ -1,0 +1,110 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+utility_meter:
+  precip_today_day:
+    source: sensor.206_n_arch_st_sensors_precipitation_today
+    cycle: daily
+    
+  precip_today_month:
+    source: sensor.206_n_arch_st_sensors_precipitation_today
+    cycle: monthly
+    
+  precip_today_year:
+    source: sensor.206_n_arch_st_sensors_precipitation_today
+    cycle: yearly
+    
+  lightning_today_day:
+    source: sensor.206_n_arch_st_sensors_lightning_strikes_last_3_hours
+    cycle: daily
+
+  lightning_today_month:
+    source: sensor.206_n_arch_st_sensors_lightning_strikes_last_3_hours
+    cycle: monthly
+
+  lightning_today_year:
+    source: sensor.206_n_arch_st_sensors_lightning_strikes_last_3_hours
+    cycle: yearly
+template:
+  - sensor:
+      - name: "Dutch Location Code"
+        unit_of_measurement: ""
+        state: >
+          {% if is_state('device_tracker.dutch_moto','home') %}1
+          {% elif is_state('device_tracker.dutch_moto','pizza') %}2
+          {% elif is_state('device_tracker.dutch_moto','stjoe') %}3
+          {% elif is_state('device_tracker.dutch_moto','kc') %}4
+          {% elif is_state('device_tracker.dutch_moto','hospital') %}5
+          {% elif is_state('device_tracker.dutch_moto','dutch grandparents') %}6
+          {% elif is_state('device_tracker.dutch_moto','ayden grandparents') %}7
+          {% elif is_state('device_tracker.dutch_moto','dad and debs') %}8
+          {% elif is_state('device_tracker.dutch_moto','wal') %}9
+          {% elif is_state('device_tracker.dutch_moto','auto') %}10
+          {% elif is_state('device_tracker.dutch_moto','mc') %}11
+          {% elif is_state('device_tracker.dutch_moto','not_home') %}12
+          {% else %}0
+          {% endif %}
+        icon: mdi:map-marker
+
+      - name: "Ayden Location Code"
+        unit_of_measurement: ""
+        state: >
+          {% if is_state('device_tracker.aydens_moto_g_stylus','home') %}1
+          {% elif is_state('device_tracker.aydens_moto_g_stylus','pizza') %}2
+          {% elif is_state('device_tracker.aydens_moto_g_stylus','stjoe') %}3
+          {% elif is_state('device_tracker.aydens_moto_g_stylus','kc') %}4
+          {% elif is_state('device_tracker.aydens_moto_g_stylus','hospital') %}5
+          {% elif is_state('device_tracker.aydens_moto_g_stylus','dutch grandparents') %}6
+          {% elif is_state('device_tracker.aydens_moto_g_stylus','ayden grandparents') %}7
+          {% elif is_state('device_tracker.aydens_moto_g_stylus','dad and debs') %}8
+          {% elif is_state('device_tracker.aydens_moto_g_stylus','wal') %}9
+          {% elif is_state('device_tracker.aydens_moto_g_stylus','auto') %}10
+          {% elif is_state('device_tracker.aydens_moto_g_stylus','mc') %}11
+          {% elif is_state('device_tracker.aydens_moto_g_stylus','not_home') %}12
+          {% else %}0
+          {% endif %}
+        icon: mdi:map-marker
+group:
+  office_lights:
+    name: Office Lights
+    entities:
+      - light.computer_backlight
+      - light.desk_back_lights
+      - light.desk_led_light
+      - light.desk_neon_rope_lights
+      - light.desk_shelf
+      - light.desktop_light
+      - light.hexa_wall_light
+      - light.office_led
+      - light.bedroom_tv_backlight
+      - light.office_wall_led
+      - light.office_tv_backlight
+      - light.livingroomstring_light
+      
+  living_room_lights:
+    name: Livingroom Lights
+    entities:
+      - light.living_room_led
+      - light.tv_backlight
+      - light.tv_stand
+
+  outside_lights:
+    name: Outdoors Lights
+    entities:
+      - light.outdoor_strip_lights
+      - light.h70b3_3e5f
+      - light.h7075_6c67
+logger:
+  default: info
+  logs:
+    homeassistant: debug
+    
